@@ -8,6 +8,7 @@
     <excludeRoots>
       <file path="$PROJECT_DIR$/build" />
       <file path="$PROJECT_DIR$/build/lib" />
+      <file path="$PROJECT_DIR$/generated" />
     </excludeRoots>
   </component>
 </project>
