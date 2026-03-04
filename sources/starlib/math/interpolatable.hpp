@@ -1,4 +1,5 @@
 #pragma once
+#include "glm.hpp"
 
 #define DEF_OPERATOR(op) \
     interpolatable operator op(const interpolatable& rhs) const { \
