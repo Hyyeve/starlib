@@ -1,10 +1,11 @@
 #pragma once
 
 #include "glm.hpp"
-#include "../types/sized_numerics.hpp"
+#include "../types/starlib_stdint.hpp"
 
 namespace starlib
 {
+    using namespace starlib_stdint;
     constexpr f64 PI = 3.1415926535897f;
     constexpr f64 TAU = 6.2831853071795f;
 
@@ -135,5 +136,35 @@ namespace starlib
         if (check < start) return glm::min(value, start);
         if (check > end) return glm::max(value, end);
         return value;
+    }
+
+    ///Number of bits required to store a value
+    inline u8 bits_needed_for(const u64 value)
+    {
+        return 64 - std::countl_zero(value);
+    }
+
+    ///Convert a 2D coord into a flat index
+    inline u64 flatten_index(const glm::vec<2, u64>& coord, const u64 x_per_y)
+    {
+        return coord.x + coord.y * x_per_y;
+    }
+
+    ///Convert a 3D coord into a flat index
+    inline u64 flatten_index(const glm::vec<3, u64>& coord, const u64 x_per_y, const u64 y_per_z)
+    {
+        return coord.x + coord.y * x_per_y + coord.z * x_per_y * y_per_z;
+    }
+
+    ///Convert a flattened index into a 2D coord
+    inline glm::vec<2, u64> unflatten_index(const u64 index, const u64 x_per_y)
+    {
+        return {index % x_per_y, index / x_per_y};
+    }
+
+    ///Convert a flattened index into a 3D coord
+    inline glm::vec<3, u64> unflatten_index(const u64 index, const u64 x_per_y, const u64 y_per_z)
+    {
+        return {index % x_per_y, (index / x_per_y) % y_per_z, index / (x_per_y * y_per_z)};
     }
 }
