@@ -11,6 +11,7 @@ target_sources(starlib PRIVATE
 target_sources(starlib PUBLIC FILE_SET HEADERS BASE_DIRS ${H_SOURCES_ROOT} FILES
         general/colors.hpp
         general/string.hpp
+        general/random.hpp
         math/glm.hpp
         math/math.hpp
         math/easing.hpp
@@ -31,6 +32,7 @@ target_include_directories(starlib PRIVATE
 )
 
 target_include_directories(starlib PUBLIC ${GLM_INCLUDE_DIRS})
+target_include_directories(starlib PUBLIC ${PCG_INCLUDE_DIRS})
 
 target_link_libraries(starlib PUBLIC glm::glm)
 target_link_libraries(starlib PRIVATE TracyClient)

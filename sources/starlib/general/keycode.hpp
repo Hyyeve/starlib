@@ -1,7 +1,7 @@
 #pragma once
 #include "starlib/types/starlib_stdint.hpp"
 
-namespace stardraw_keycodes
+namespace starlib_keycodes
 {
     //Keycodes enum (keynum) that matches GLFW's defined values for easy interoperability
     enum class keycode : starlib_stdint::i32
@@ -132,5 +132,42 @@ namespace stardraw_keycodes
         right_alt = 346,
         right_super = 347,
         menu = 348,
+
+        mouse_left = 0,
+        mouse_right = 1,
+        mouse_middle = 2,
+
+        mouse_side_1 = 3,
+        mouse_side_2 = 4,
+        mouse_side_3 = 5,
+        mouse_side_4 = 6,
+        mouse_side_5 = 7,
+
+        gamepad_a = 20,
+        gamepad_b = 21,
+        gamepad_x = 22,
+        gamepad_y = 23,
+
+        gamepad_lb = 24,
+        gamepad_rb = 25,
+
+        gamepad_select = 26,
+        gamepad_start = 27,
+        gamepad_home = 28,
+
+        left_joystick_click = 29,
+        right_joystick_click = 30,
+
+        dpad_up = 31,
+        dpad_right = 32,
+        dpad_down = 33,
+        dpad_left = 34,
+
+        left_joystick_x = 40,
+        left_joystick_y = 41,
+        right_joystick_x = 42,
+        right_joystick_y = 43,
+        gamepad_left_trigger = 44,
+        gamepad_right_trigger = 45,
     };
 }
