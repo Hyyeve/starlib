@@ -22,6 +22,7 @@ target_sources(starlib PUBLIC FILE_SET HEADERS BASE_DIRS ${H_SOURCES_ROOT} FILES
         types/index_allocator.hpp
         types/bitvector.hpp
         types/palette_vector.hpp
+        types/status.hpp
 )
 
 target_include_directories(starlib PRIVATE
