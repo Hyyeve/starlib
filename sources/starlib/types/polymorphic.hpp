@@ -75,6 +75,12 @@ namespace starlib
             return ptr();
         }
 
+        bool operator==(const polymorphic& other) const
+        {
+            if (ptr() == nullptr || other.ptr() == nullptr) return ptr() == other.ptr();
+            return *ptr() == *other.ptr();
+        }
+
         const base_type* ptr() const
         {
             return stored_ptr.get();
