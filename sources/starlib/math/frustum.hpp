@@ -4,7 +4,6 @@
 
 namespace starlib
 {
-    using namespace starlib_stdint;
     ///Standard camera frustum planes
     class frustum
     {

@@ -7,9 +7,6 @@
 
 namespace starlib
 {
-    using namespace starlib_stdint;
-
-
     ///Finds the Nth occurance of a substring
     [[nodiscard]] i32 string_find_occurance(const std::string_view& str, const std::string_view& target, const u32 occurance_index);
 

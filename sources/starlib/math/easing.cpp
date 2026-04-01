@@ -2,7 +2,7 @@
 #include <cmath>
 #include "math.hpp"
 
-namespace starlib
+namespace starlib::math
 {
     f32 ease_power_in(const f32 value, const f32 power)
     {

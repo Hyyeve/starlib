@@ -4,7 +4,7 @@
 
 namespace starlib
 {
-    using namespace starlib_stdint;
+    ///A simple allocation tracker for all of your 'keeping track of sized blocks that can't overlap' needs.
     class block_allocator
     {
     public:

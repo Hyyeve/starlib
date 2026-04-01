@@ -2,11 +2,8 @@
 #include "string.hpp"
 #include "glm/glm.hpp"
 
-namespace starlib_colors
+namespace starlib::colors
 {
-    using namespace starlib;
-    using namespace starlib_stdint;
-
     constexpr glm::vec4 white = glm::vec4(1, 1, 1, 1);
     constexpr glm::vec4 black = glm::vec4(0, 0, 0, 1);
     constexpr glm::vec4 transparent_white = glm::vec4(1, 1, 1, 0);

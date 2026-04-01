@@ -1,10 +1,10 @@
 #pragma once
 #include "starlib/types/starlib_stdint.hpp"
 
-namespace starlib_keycodes
+namespace starlib
 {
     //Keycodes enum (keynum) that matches GLFW's defined values for easy interoperability
-    enum class keycode : starlib_stdint::i32
+    enum class keycode : i32
     {
         A = 65,
         B = 66,

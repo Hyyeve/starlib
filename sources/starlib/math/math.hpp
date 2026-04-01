@@ -3,9 +3,8 @@
 #include "glm.hpp"
 #include "../types/starlib_stdint.hpp"
 
-namespace starlib
+namespace starlib::math
 {
-    using namespace starlib_stdint;
     constexpr f64 PI = 3.1415926535897f;
     constexpr f64 TAU = 6.2831853071795f;
 

@@ -5,7 +5,7 @@
 
 namespace starlib
 {
-    enum class status_type : starlib_stdint::u8
+    enum class status_type : u8
     {
         SUCCESS, UNSUPPORTED, UNIMPLEMENTED, NOTHING_TO_DO,
         ALREADY_INITIALIZED, NOT_INITIALIZED,

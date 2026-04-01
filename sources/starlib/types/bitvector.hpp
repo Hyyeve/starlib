@@ -4,7 +4,6 @@
 
 namespace starlib
 {
-    using namespace starlib_stdint;
     ///Tightly-packed vector of bitstrings, stored as u64s
     class bitvector
     {

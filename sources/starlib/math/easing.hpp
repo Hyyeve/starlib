@@ -1,9 +1,8 @@
 #pragma once
 #include "../types/starlib_stdint.hpp"
 
-namespace starlib
+namespace starlib::easing
 {
-    using namespace starlib_stdint;
     f32 ease_power_in(const f32 value, const f32 power = 2);
     f32 ease_power_out(const f32 value, const f32 power = 2);
     f32 ease_power_both(const f32 value, const f32 power = 2);

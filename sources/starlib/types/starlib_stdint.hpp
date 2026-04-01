@@ -1,7 +1,7 @@
 #pragma once
 #include <atomic>
 
-namespace starlib_stdint
+namespace starlib
 {
     typedef uint8_t u8;
     typedef uint16_t u16;
