@@ -10,7 +10,8 @@ namespace starlib
     public:
         explicit block_allocator(const u64 size);
 
-        bool try_allocate(const u64 size, u64& address_out);
+        [[nodiscard]] bool can_allocate(const u64 size) const;
+        [[nodiscard]] bool try_allocate(const u64 size, u64& address_out);
         void free(const u64 address);
         void resize(const u64 size);
         void clear();
@@ -29,5 +30,7 @@ namespace starlib
         std::list<block> allocations {};
         u64 total_pool_size;
         u64 remaining_available_size;
+
+
     };
 }
