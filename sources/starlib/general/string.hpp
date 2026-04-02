@@ -113,4 +113,45 @@ namespace starlib
     f64 parse_f64(const std::string_view& str, const f64 default_val) noexcept;
     bool parse_bool(const std::string_view& str, const bool default_val) noexcept;
 
+    namespace ansi_formatting
+    {
+        #define ANSI_INVOKER "\u001b"
+
+        constexpr std::string_view ansi_inovker = ANSI_INVOKER;
+
+        constexpr std::string rgb(const u8 r, const u8 g, const u8 b) noexcept
+        {
+            return stringify(ANSI_INVOKER, "[38;2;", static_cast<u32>(r) ,";", static_cast<u32>(g),";", static_cast<u32>(b),"m");
+        }
+
+        const std::string orange = rgb(255, 127, 0);
+        const std::string mint = rgb(0, 255, 127);
+        const std::string violet = rgb(127, 0, 255);
+        const std::string crimson = rgb(255, 0, 127);
+        const std::string lime = rgb(127, 255, 0);
+        const std::string azure = rgb(0, 127, 255);
+
+        constexpr std::string_view reset = ANSI_INVOKER "[0m";
+        constexpr std::string_view delete_line = ANSI_INVOKER "[1A" ANSI_INVOKER "[2K\r";
+        constexpr std::string_view bold = ANSI_INVOKER "[1m";
+
+        constexpr std::string_view underline = ANSI_INVOKER "[4m";
+        constexpr std::string_view black = ANSI_INVOKER "[30m";
+        constexpr std::string_view red = ANSI_INVOKER "[31m";
+        constexpr std::string_view bright_red = ANSI_INVOKER "[91m";
+        constexpr std::string_view green = ANSI_INVOKER "[32m";
+        constexpr std::string_view bright_green = ANSI_INVOKER "[92m";
+        constexpr std::string_view yellow = ANSI_INVOKER "[33m";
+        constexpr std::string_view bright_yellow = ANSI_INVOKER "[93m";
+        constexpr std::string_view blue = ANSI_INVOKER "[34m";
+        constexpr std::string_view bright_blue = ANSI_INVOKER "[94m";
+        constexpr std::string_view purple = ANSI_INVOKER "[35m";
+        constexpr std::string_view bright_purple = ANSI_INVOKER "[95m";
+        constexpr std::string_view cyan = ANSI_INVOKER "[36m";
+        constexpr std::string_view bright_cyan = ANSI_INVOKER "[96m";
+        constexpr std::string_view grey = ANSI_INVOKER "[37m";
+        constexpr std::string_view white = ANSI_INVOKER "[97m";
+
+        #undef ANSI_INVOKER
+    }
 }

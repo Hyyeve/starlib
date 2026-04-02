@@ -9,3 +9,5 @@ set(H_PROJECT_VERSION
 set(H_PROJECT_DESCRIPTION
         "Hyeve's general purpose utils library"
 )
+
+set(TRACY_ENABLE 1)

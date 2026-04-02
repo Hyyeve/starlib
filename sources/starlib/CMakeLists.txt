@@ -2,16 +2,22 @@ add_library(starlib STATIC)
 
 target_sources(starlib PRIVATE
         general/string.cpp
+        general/logger.cpp
         math/easing.cpp
         math/frustum.cpp
         types/block_allocator.cpp
         types/bitvector.cpp
+        types/gameloop.cpp
+        types/clock.cpp
+        async/async.cpp
+        async/time.cpp
 )
 
 target_sources(starlib PUBLIC FILE_SET HEADERS BASE_DIRS ${H_SOURCES_ROOT} FILES
         general/colors.hpp
         general/string.hpp
         general/random.hpp
+        general/logger.hpp
         math/glm.hpp
         math/math.hpp
         math/easing.hpp
@@ -24,6 +30,10 @@ target_sources(starlib PUBLIC FILE_SET HEADERS BASE_DIRS ${H_SOURCES_ROOT} FILES
         types/bitvector.hpp
         types/palette_vector.hpp
         types/status.hpp
+        types/gameloop.hpp
+        types/clock.hpp
+        async/async.hpp
+        async/time.hpp
 )
 
 target_include_directories(starlib PRIVATE
@@ -34,6 +44,7 @@ target_include_directories(starlib PRIVATE
 target_include_directories(starlib PUBLIC ${GLM_INCLUDE_DIRS})
 target_include_directories(starlib PUBLIC ${PCG_INCLUDE_DIRS})
 
+target_link_libraries(starlib PRIVATE nanotime)
 target_link_libraries(starlib PUBLIC glm::glm)
 target_link_libraries(starlib PRIVATE TracyClient)
 
