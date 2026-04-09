@@ -30,7 +30,7 @@ namespace starlib
             const f64 frame_step_time = 1.0 / this->target_fps;
             u32 update_budget = this->max_updates_per_render;
 
-            const f64 new_time = this->timer_clock.elapsed();
+            const f64 new_time = this->timer_clock.get_elapsed();
             const f64 raw_delta_time = new_time - current_time;
 
             const f64 adjusted_delta_time = raw_delta_time > max_step_time ? max_step_time : raw_delta_time;

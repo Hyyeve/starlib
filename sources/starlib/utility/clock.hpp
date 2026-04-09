@@ -1,6 +1,5 @@
 #pragma once
-#include <chrono>
-#include "starlib_stdint.hpp"
+#include "../general/starlib_stdint.hpp"
 
 namespace starlib
 {
@@ -23,11 +22,11 @@ namespace starlib
         void set_elapsed_us(const u64 microseconds);
 
         ///Get the elapsed time, in seconds. Precision of the time is, at best, in microseconds.
-        f64 elapsed();
+        f64 get_elapsed();
         ///Get the elapsed time, in milliseconds. Precision of the time is, at best, in microseconds.
-        f64 elapsed_ms();
+        f64 get_elapsed_ms();
         ///Get the elapsed time, in microseconds. Precision of the time is, at best, in microseconds.
-        u64 elapsed_us();
+        u64 get_elapsed_us();
 
     private:
         u64 last_seen_time = 0;

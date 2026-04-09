@@ -3,7 +3,7 @@
 #include <initializer_list>
 #include <vector>
 
-#include "starlib/types/starlib_stdint.hpp"
+#include "../general/starlib_stdint.hpp"
 
 namespace starlib
 {

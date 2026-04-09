@@ -30,31 +30,31 @@ namespace starlib
 
     std::string stringify_utf32(const u32 codepoint)
     {
-        std::string result;
-        if (codepoint < 0x80)
+        std::stringstream result;
+        if (codepoint < 0x80) //ASCII
         {
-            result += static_cast<char>(codepoint);
+            result << static_cast<char>(codepoint);
         }
-        else if (codepoint < 0x800)
+        else if (codepoint < 0x800) //2-part character
         {
-            result += static_cast<char>((codepoint >> 6) | 0xC0);
-            result += static_cast<char>((codepoint & 0x3F) | 0x80);
+            result << static_cast<char>((codepoint >> 6) | 0xC0);
+            result << static_cast<char>((codepoint & 0x3F) | 0x80);
         }
-        else if (codepoint < 0x10000)
+        else if (codepoint < 0x10000) //3-part character
         {
-            result += static_cast<char>((codepoint >> 12) | 0xE0);
-            result += static_cast<char>(((codepoint >> 6) & 0x3F) | 0x80);
-            result += static_cast<char>((codepoint & 0x3F) | 0x80);
+            result << static_cast<char>((codepoint >> 12) | 0xE0);
+            result << static_cast<char>(((codepoint >> 6) & 0x3F) | 0x80);
+            result << static_cast<char>((codepoint & 0x3F) | 0x80);
         }
-        else if (codepoint < 0x110000)
+        else if (codepoint < 0x110000) //4-part character
         {
-            result += static_cast<char>((codepoint >> 18) | 0xF0);
-            result += static_cast<char>(((codepoint >> 12) & 0x3F) | 0x80);
-            result += static_cast<char>(((codepoint >> 6) & 0x3F) | 0x80);
-            result += static_cast<char>((codepoint & 0x3F) | 0x80);
+            result << static_cast<char>((codepoint >> 18) | 0xF0);
+            result << static_cast<char>(((codepoint >> 12) & 0x3F) | 0x80);
+            result << static_cast<char>(((codepoint >> 6) & 0x3F) | 0x80);
+            result << static_cast<char>((codepoint & 0x3F) | 0x80);
         }
 
-        return result;
+        return result.str();
     }
 
     std::string stringify_duration(const std::chrono::microseconds duration)

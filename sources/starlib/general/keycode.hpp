@@ -1,9 +1,9 @@
 #pragma once
-#include "starlib/types/starlib_stdint.hpp"
+#include "starlib_stdint.hpp"
 
 namespace starlib
 {
-    //Keycodes enum (keynum) that matches GLFW's defined values for easy interoperability
+    ///Keycodes enum (keynum) that (mostly) matches GLFW's defined values for easy interoperability
     enum class keycode : i32
     {
         A = 65,

@@ -1,43 +1,44 @@
 add_library(starlib STATIC)
 
 target_sources(starlib PRIVATE
-        general/string.cpp
-        general/logger.cpp
-        general/time.cpp
-        math/easing.cpp
-        math/frustum.cpp
-        types/block_allocator.cpp
-        types/bitvector.cpp
-        types/gameloop.cpp
-        types/clock.cpp
         async/async.cpp
-        async/threadpool_task.cpp
         async/threadpool.cpp
+        async/threadpool_task.cpp
+        general/gameloop.cpp
+        general/logger.cpp
+        math/easing.cpp
+        utility/bitvector.cpp
+        utility/block_allocator.cpp
+        utility/clock.cpp
+        utility/string.cpp
+        utility/time.cpp
 )
 
 target_sources(starlib PUBLIC FILE_SET HEADERS BASE_DIRS ${H_SOURCES_ROOT} FILES
-        general/colors.hpp
-        general/string.hpp
-        general/random.hpp
-        general/logger.hpp
-        general/time.hpp
-        math/glm.hpp
-        math/math.hpp
-        math/easing.hpp
-        math/interpolatable.hpp
-        math/frustum.hpp
-        types/starlib_stdint.hpp
-        types/polymorphic.hpp
-        types/block_allocator.hpp
-        types/index_allocator.hpp
-        types/bitvector.hpp
-        types/palette_vector.hpp
-        types/status.hpp
-        types/gameloop.hpp
-        types/clock.hpp
         async/async.hpp
-        async/threadpool_task.hpp
         async/threadpool.hpp
+        async/threadpool_task.hpp
+        general/gameloop.hpp
+        general/graphics.hpp
+        general/keycode.hpp
+        general/logger.hpp
+        general/starlib_stdint.hpp
+        general/status.hpp
+        math/easing.hpp
+        math/frustum.hpp
+        math/glm.hpp
+        math/interpolatable.hpp
+        math/random.hpp
+        utility/bitvector.hpp
+        utility/block_allocator.hpp
+        utility/clock.hpp
+        utility/colors.hpp
+        utility/heap_value.hpp
+        utility/index_allocator.hpp
+        utility/palette_vector.hpp
+        utility/polymorphic.hpp
+        utility/string.hpp
+        utility/time.hpp
 )
 
 target_include_directories(starlib PRIVATE

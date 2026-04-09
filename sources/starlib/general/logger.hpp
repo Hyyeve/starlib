@@ -1,8 +1,9 @@
 #pragma once
 #include <mutex>
+#include <unordered_map>
 
-#include "string.hpp"
-#include "starlib/types/starlib_stdint.hpp"
+#include "../utility/string.hpp"
+#include "starlib_stdint.hpp"
 
 namespace starlib
 {
@@ -68,10 +69,8 @@ namespace starlib
         log_level logging_level = log_level::NORMAL;
     #endif
 
-        i32 log_repeat_count = 0;
-        std::string last_message;
-        logger_tag last_tag = {"None", ""};
         std::stringstream builder;
         std::vector<std::string> message_queue;
+        std::unordered_map<u64, u64> message_repeat_map;
     };
 }

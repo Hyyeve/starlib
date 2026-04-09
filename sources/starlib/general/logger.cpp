@@ -1,4 +1,4 @@
-#include "logger.hpp"
+#include "../general/logger.hpp"
 
 #include <chrono>
 #include <iomanip>
@@ -6,7 +6,7 @@
 #include <mutex>
 #include <tracy/Tracy.hpp>
 
-#include "string.hpp"
+#include "../utility/string.hpp"
 #include "starlib/async/async.hpp"
 
 namespace starlib
@@ -43,10 +43,21 @@ namespace starlib
         const std::string time_str = std::format("{0:%T}", local_time);
         const std::string timestamp = stringify('[', ansi_formatting::bold, ansi_formatting::cyan, time_str, ansi_formatting::reset, "]");
 
+        u64 last_message_hash = 0;
+
         for (const std::string& message : messages)
         {
-            if (message != ansi_formatting::delete_line) std::cout << timestamp;
+            const u64 hash = string_hash(message);
+            const bool is_duplicate = hash == last_message_hash;
+            if (is_duplicate) std::cout << ansi_formatting::delete_line;
+
+            std::cout << timestamp;
             std::cout << message;
+
+            if (is_duplicate) std::cout << " (" << ansi_formatting::bold << "x" << std::to_string(message_repeat_map[hash]) << ')';
+
+            last_message_hash = hash;
+            message_repeat_map[hash]++;
         }
     }
 
@@ -56,30 +67,12 @@ namespace starlib
 
         logging_lock.lock();
 
-        const bool is_repeat = msg == last_message && tag.tag_id == last_tag.tag_id;
-
-        if (is_repeat)
-        {
-            log_repeat_count++;
-            message_queue.emplace_back(ansi_formatting::delete_line);
-        }
-        else
-        {
-            log_repeat_count = 0;
-            last_message = msg;
-            last_tag = tag;
-        }
-
         builder << stringify("[", ansi_formatting::bold, ansi_formatting::bright_blue, "T", std::setfill('0'), std::setw(3), thread_id(), ansi_formatting::reset, ']');
 
         if (!type.empty()) write_tag(ansi_formatting::bold, formatting, {type, ""});
         if (!tag.tag_id.empty()) write_tag(ansi_formatting::reset, ansi_formatting::purple, tag);
 
-        builder << ' ' << formatting << msg << ansi_formatting::reset;
-
-        if (is_repeat) write_repeat_tag(formatting);
-
-        builder << '\n';
+        builder << ' ' << formatting << msg;
 
         message_queue.push_back(builder.str());
         builder.str("");
@@ -125,6 +118,5 @@ namespace starlib
 
     inline void logger::write_repeat_tag(const std::string_view color_code)
     {
-        builder << ansi_formatting::reset << " [" << ansi_formatting::bold << color_code << "+" << std::to_string(log_repeat_count) << ansi_formatting::reset << ']';
     }
 }

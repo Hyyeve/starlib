@@ -1,6 +1,6 @@
 #include "clock.hpp"
 
-#include "../general/time.hpp"
+#include "time.hpp"
 #include "tracy/Tracy.hpp"
 
 namespace starlib
@@ -32,17 +32,17 @@ namespace starlib
         stored_microseconds = microseconds;
     }
 
-    f64 clock::elapsed()
+    f64 clock::get_elapsed()
     {
-        return elapsed_ms() / 1000.0f;
+        return get_elapsed_ms() / 1000.0f;
     }
 
-    f64 clock::elapsed_ms()
+    f64 clock::get_elapsed_ms()
     {
-        return elapsed_us() / 1000.0f;
+        return get_elapsed_us() / 1000.0f;
     }
 
-    u64 clock::elapsed_us()
+    u64 clock::get_elapsed_us()
     {
         ZoneScoped;
         if (!running) return stored_microseconds;

@@ -2,8 +2,6 @@
 
 #include <atomic>
 #include <functional>
-#include <iostream>
-#include <list>
 #include <mutex>
 #include <thread>
 #include <unordered_set>

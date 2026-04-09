@@ -1,8 +1,8 @@
 #pragma once
 #include <unordered_map>
 
-#include "bitvector.hpp"
-#include "index_allocator.hpp"
+#include "../types/bitvector.hpp"
+#include "../types/index_allocator.hpp"
 #include "starlib/math/math.hpp"
 
 namespace starlib

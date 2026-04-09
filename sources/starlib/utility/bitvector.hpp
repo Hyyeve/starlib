@@ -1,6 +1,6 @@
 #pragma once
 #include <vector>
-#include "starlib_stdint.hpp"
+#include "../general/starlib_stdint.hpp"
 
 namespace starlib
 {
