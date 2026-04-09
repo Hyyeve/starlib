@@ -9,30 +9,21 @@
 #include "string.hpp"
 #include "starlib/async/async.hpp"
 
-namespace starlib::logger
+namespace starlib
 {
-    static std::mutex logging_lock;
-    #ifdef DEBUG
-    static log_level logging_level = log_level::ALL;
-    #else
-    static log_level logging_level = log_level::NORMAL;
-    #endif
+    logger::~logger()
+    {
+        flush_logs();
+    }
 
-    static i32 log_repeat_count = 0;
-    static std::string last_message;
-    static logger_tag last_tag = {"None", ""};
-    static std::stringstream builder;
-    static std::vector<std::string> message_queue;
-
-
-    void set_log_level(const log_level level)
+    void logger::set_log_level(const log_level level)
     {
         logging_lock.lock();
         logging_level = level;
         logging_lock.unlock();
     }
 
-    void flush_logs()
+    void logger::flush_logs()
     {
         ZoneScoped;
         logging_lock.lock();
@@ -43,12 +34,13 @@ namespace starlib::logger
             return;
         }
 
-        const std::vector messages = message_queue;
-        message_queue.clear();
+        //Minimize blocking other threads logging messages
+        const std::vector messages = std::move(message_queue);
+        message_queue = std::vector<std::string>();
         logging_lock.unlock();
 
-        const auto local_time = std::chrono::zoned_time{std::chrono::current_zone(), std::chrono::system_clock::now()};
-        const std::string time_str = std::format("%T", local_time);
+        const auto local_time = std::chrono::zoned_time{std::chrono::current_zone(), std::chrono::time_point_cast<std::chrono::seconds>(std::chrono::system_clock::now())};
+        const std::string time_str = std::format("{0:%T}", local_time);
         const std::string timestamp = stringify('[', ansi_formatting::bold, ansi_formatting::cyan, time_str, ansi_formatting::reset, "]");
 
         for (const std::string& message : messages)
@@ -58,17 +50,7 @@ namespace starlib::logger
         }
     }
 
-    inline void write_tag(const std::string_view format, const std::string_view color_code, const logger_tag& tag)
-    {
-        builder << '[' << format << color_code << tag.tag_id << ansi_formatting::reset << ']' << tag.message_format_codes;
-    }
-
-    inline void write_repeat_tag(const std::string_view color_code)
-    {
-        builder << ansi_formatting::reset << " [" << ansi_formatting::bold << color_code << "+" << std::to_string(log_repeat_count) << ansi_formatting::reset << ']';
-    }
-
-    void log_str(const logger_tag& tag, const std::string_view msg, const std::string_view type, const std::string_view formatting)
+    void logger::log_str(const logger_tag& tag, const std::string_view msg, const std::string_view type, const std::string_view formatting)
     {
         ZoneScoped;
 
@@ -88,7 +70,7 @@ namespace starlib::logger
             last_tag = tag;
         }
 
-        builder << stringify("[", ansi_formatting::bold, ansi_formatting::bright_blue, "T", std::setfill('0'), std::setw(3), async::thread_id(), ansi_formatting::reset, ']');
+        builder << stringify("[", ansi_formatting::bold, ansi_formatting::bright_blue, "T", std::setfill('0'), std::setw(3), thread_id(), ansi_formatting::reset, ']');
 
         if (!type.empty()) write_tag(ansi_formatting::bold, formatting, {type, ""});
         if (!tag.tag_id.empty()) write_tag(ansi_formatting::reset, ansi_formatting::purple, tag);
@@ -105,34 +87,44 @@ namespace starlib::logger
         logging_lock.unlock();
     }
 
-    void log_debug_str(const logger_tag& tag, const std::string_view msg)
+    void logger::log_debug_str(const logger_tag& tag, const std::string_view msg)
     {
         if (logging_level > log_level::NORMAL) log_str(tag, msg, "DEBG", ansi_formatting::lime);
     }
 
-    void log_info_str(const logger_tag& tag, const std::string_view msg)
+    void logger::log_info_str(const logger_tag& tag, const std::string_view msg)
     {
         if (logging_level > log_level::REDUCED) log_str(tag, msg, "INFO", ansi_formatting::azure);
     }
 
-    void log_performance_str(const logger_tag& tag, const std::string_view msg)
+    void logger::log_performance_str(const logger_tag& tag, const std::string_view msg)
     {
         if (logging_level > log_level::REDUCED) log_str(tag, msg, "PERF", ansi_formatting::cyan);
     }
 
-    void log_warn_str(const logger_tag& tag, const std::string_view msg)
+    void logger::log_warn_str(const logger_tag& tag, const std::string_view msg)
     {
         if (logging_level > log_level::FATAL_ONLY) log_str(tag, msg, "WARN", ansi_formatting::bright_yellow);
     }
 
-    void log_error_str(const logger_tag& tag, const std::string_view msg)
+    void logger::log_error_str(const logger_tag& tag, const std::string_view msg)
     {
         if (logging_level > log_level::FATAL_ONLY) log_str(tag, msg, "ERRR", ansi_formatting::red);
     }
 
-    void log_fatal_str(const logger_tag& tag, const std::string_view msg)
+    void logger::log_fatal_str(const logger_tag& tag, const std::string_view msg)
     {
         static const std::string fatal_format = stringify(ansi_formatting::bright_red, ansi_formatting::bold, ansi_formatting::underline);
         log_str(tag, msg, "FATAL", fatal_format);
+    }
+
+    inline void logger::write_tag(const std::string_view format, const std::string_view color_code, const logger_tag& tag)
+    {
+        builder << '[' << format << color_code << tag.tag_id << ansi_formatting::reset << ']' << tag.message_format_codes;
+    }
+
+    inline void logger::write_repeat_tag(const std::string_view color_code)
+    {
+        builder << ansi_formatting::reset << " [" << ansi_formatting::bold << color_code << "+" << std::to_string(log_repeat_count) << ansi_formatting::reset << ']';
     }
 }

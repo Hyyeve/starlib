@@ -1,12 +1,15 @@
 #pragma once
+#include <mutex>
+
 #include "string.hpp"
 #include "starlib/types/starlib_stdint.hpp"
 
 namespace starlib
 {
     ///Fairly simple threadsafe logger with formatting
-    inline namespace logger
+    class logger
     {
+    public:
         enum class log_level : u8
         {
             ALL = 3, //Everything!
@@ -23,10 +26,14 @@ namespace starlib
             std::string message_format_codes;
         };
 
+        ///Destructing the logger automatically flushes any remaining logs.
+        ~logger();
+
         void set_log_level(const log_level level);
 
         ///Flush buffer logs. A good time to call this is at the end of your update/frame loop.
         ///Safe to call on a separate thread or through a threadpool task.
+        ///Note that for performance reasons, timestamps are generated at the time of the flush, *not* at the time of the log call.
         void flush_logs();
 
         ///Root log function
@@ -43,15 +50,28 @@ namespace starlib
 
         //Templated versions of the predefined functions that performs automatic std::format formatting
 
-        #define VARARG_DEF(type) void type(const logger_tag tag, const std::string_view msg, const auto... params) { type_str(tag, std::format(msg, params...)); }
+        inline void log_debug(const logger_tag tag, const auto... params) { log_debug_str(tag, stringify(params...)); }
+        inline void log_info(const logger_tag tag, const auto... params) { log_info_str(tag, stringify(params...)); }
+        inline void log_performance(const logger_tag tag, const auto... params) { log_performance_str(tag, stringify(params...)); }
+        inline void log_warn(const logger_tag tag, const auto... params) { log_warn_str(tag, stringify(params...)); }
+        inline void log_error(const logger_tag tag, const auto... params) { log_error_str(tag, stringify(params...)); }
+        inline void log_fatal(const logger_tag tag, const auto... params) { log_fatal_str(tag, stringify(params...)); }
 
-        VARARG_DEF(log_debug)
-        VARARG_DEF(log_info)
-        VARARG_DEF(log_performance)
-        VARARG_DEF(log_warn)
-        VARARG_DEF(log_error)
-        VARARG_DEF(log_fatal)
+    private:
+        void write_tag(std::string_view format, std::string_view color_code, const logger_tag& tag);
+        void write_repeat_tag(std::string_view color_code);
 
-        #undef VARARG_DEF
-    }
+        std::mutex logging_lock;
+    #ifdef DEBUG
+        log_level logging_level = log_level::ALL;
+    #else
+        log_level logging_level = log_level::NORMAL;
+    #endif
+
+        i32 log_repeat_count = 0;
+        std::string last_message;
+        logger_tag last_tag = {"None", ""};
+        std::stringstream builder;
+        std::vector<std::string> message_queue;
+    };
 }

@@ -1,6 +1,6 @@
 #include "clock.hpp"
 
-#include "starlib/async/time.hpp"
+#include "../general/time.hpp"
 #include "tracy/Tracy.hpp"
 
 namespace starlib

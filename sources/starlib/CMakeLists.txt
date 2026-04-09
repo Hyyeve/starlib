@@ -3,6 +3,7 @@ add_library(starlib STATIC)
 target_sources(starlib PRIVATE
         general/string.cpp
         general/logger.cpp
+        general/time.cpp
         math/easing.cpp
         math/frustum.cpp
         types/block_allocator.cpp
@@ -10,7 +11,8 @@ target_sources(starlib PRIVATE
         types/gameloop.cpp
         types/clock.cpp
         async/async.cpp
-        async/time.cpp
+        async/threadpool_task.cpp
+        async/threadpool.cpp
 )
 
 target_sources(starlib PUBLIC FILE_SET HEADERS BASE_DIRS ${H_SOURCES_ROOT} FILES
@@ -18,6 +20,7 @@ target_sources(starlib PUBLIC FILE_SET HEADERS BASE_DIRS ${H_SOURCES_ROOT} FILES
         general/string.hpp
         general/random.hpp
         general/logger.hpp
+        general/time.hpp
         math/glm.hpp
         math/math.hpp
         math/easing.hpp
@@ -33,7 +36,8 @@ target_sources(starlib PUBLIC FILE_SET HEADERS BASE_DIRS ${H_SOURCES_ROOT} FILES
         types/gameloop.hpp
         types/clock.hpp
         async/async.hpp
-        async/time.hpp
+        async/threadpool_task.hpp
+        async/threadpool.hpp
 )
 
 target_include_directories(starlib PRIVATE
