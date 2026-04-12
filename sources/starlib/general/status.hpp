@@ -1,7 +1,7 @@
 #pragma once
 #include <string>
 #include <string_view>
-#include "starlib_stdint.hpp"
+#include "stdint.hpp"
 
 namespace starlib
 {

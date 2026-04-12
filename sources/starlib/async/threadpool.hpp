@@ -4,7 +4,7 @@
 #include <thread>
 #include <vector>
 
-#include "../general/starlib_stdint.hpp"
+#include "../general/stdint.hpp"
 
 namespace starlib
 {

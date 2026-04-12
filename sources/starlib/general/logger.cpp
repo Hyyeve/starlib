@@ -41,20 +41,21 @@ namespace starlib
 
         const auto local_time = std::chrono::zoned_time{std::chrono::current_zone(), std::chrono::time_point_cast<std::chrono::seconds>(std::chrono::system_clock::now())};
         const std::string time_str = std::format("{0:%T}", local_time);
-        const std::string timestamp = stringify('[', ansi_formatting::bold, ansi_formatting::cyan, time_str, ansi_formatting::reset, "]");
-
-        u64 last_message_hash = 0;
+        const std::string timestamp = stringify(ansi_formatting::reset, '[', ansi_formatting::bold, ansi_formatting::cyan, time_str, ansi_formatting::reset, "]");
 
         for (const std::string& message : messages)
         {
             const u64 hash = string_hash(message);
             const bool is_duplicate = hash == last_message_hash;
             if (is_duplicate) std::cout << ansi_formatting::delete_line;
+            else message_repeat_map[hash] = 1;
 
             std::cout << timestamp;
             std::cout << message;
 
             if (is_duplicate) std::cout << " (" << ansi_formatting::bold << "x" << std::to_string(message_repeat_map[hash]) << ')';
+
+            std::cout << std::endl;
 
             last_message_hash = hash;
             message_repeat_map[hash]++;
@@ -114,9 +115,5 @@ namespace starlib
     inline void logger::write_tag(const std::string_view format, const std::string_view color_code, const logger_tag& tag)
     {
         builder << '[' << format << color_code << tag.tag_id << ansi_formatting::reset << ']' << tag.message_format_codes;
-    }
-
-    inline void logger::write_repeat_tag(const std::string_view color_code)
-    {
     }
 }

@@ -2,7 +2,7 @@
 #include <random>
 
 #include "pcg/pcg_random.hpp"
-#include "../general/starlib_stdint.hpp"
+#include "../general/stdint.hpp"
 
 namespace starlib
 {

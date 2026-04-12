@@ -1,6 +1,6 @@
 #pragma once
 #include <list>
-#include "../general/starlib_stdint.hpp"
+#include "../general/stdint.hpp"
 
 namespace starlib
 {

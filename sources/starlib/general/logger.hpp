@@ -3,7 +3,7 @@
 #include <unordered_map>
 
 #include "../utility/string.hpp"
-#include "starlib_stdint.hpp"
+#include "stdint.hpp"
 
 namespace starlib
 {
@@ -60,7 +60,6 @@ namespace starlib
 
     private:
         void write_tag(std::string_view format, std::string_view color_code, const logger_tag& tag);
-        void write_repeat_tag(std::string_view color_code);
 
         std::mutex logging_lock;
     #ifdef DEBUG
@@ -72,5 +71,6 @@ namespace starlib
         std::stringstream builder;
         std::vector<std::string> message_queue;
         std::unordered_map<u64, u64> message_repeat_map;
+        u64 last_message_hash = 0;
     };
 }

@@ -20,9 +20,8 @@ target_sources(starlib PUBLIC FILE_SET HEADERS BASE_DIRS ${H_SOURCES_ROOT} FILES
         async/threadpool_task.hpp
         general/gameloop.hpp
         general/graphics.hpp
-        general/keycode.hpp
         general/logger.hpp
-        general/starlib_stdint.hpp
+        general/stdint.hpp
         general/status.hpp
         math/easing.hpp
         math/frustum.hpp

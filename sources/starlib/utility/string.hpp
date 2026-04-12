@@ -3,7 +3,7 @@
 #include <sstream>
 #include <string>
 
-#include "../general/starlib_stdint.hpp"
+#include "../general/stdint.hpp"
 
 namespace starlib
 {

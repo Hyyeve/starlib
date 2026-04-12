@@ -1,7 +1,7 @@
 #pragma once
 #include <functional>
+#include "stdint.hpp"
 #include "../utility/clock.hpp"
-#include "starlib_stdint.hpp"
 
 namespace starlib
 {
