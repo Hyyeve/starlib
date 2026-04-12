@@ -12,6 +12,9 @@ target_sources(starlib PRIVATE
         utility/clock.cpp
         utility/string.cpp
         utility/time.cpp
+        input/virtual_mouse.cpp
+        input/virtual_keyboard.cpp
+        input/virtual_controller.cpp
 )
 
 target_sources(starlib PUBLIC FILE_SET HEADERS BASE_DIRS ${H_SOURCES_ROOT} FILES
@@ -38,6 +41,9 @@ target_sources(starlib PUBLIC FILE_SET HEADERS BASE_DIRS ${H_SOURCES_ROOT} FILES
         utility/polymorphic.hpp
         utility/string.hpp
         utility/time.hpp
+        input/virtual_mouse.hpp
+        input/virtual_keyboard.hpp
+        input/virtual_controller.hpp
 )
 
 target_include_directories(starlib PRIVATE
