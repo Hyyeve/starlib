@@ -11,4 +11,7 @@ namespace starlib
 
     ///Highly precise sleep that minimizes CPU overhead, using a combination of system level accurate sleeping and spinlock.
     void sleep_micros(const u64 microseconds);
+
+    ///Highly precise sleep that minimizes CPU overhead, using a combination of system level accurate sleeping and spinlock.
+    void sleep_accurate(const f32 seconds);
 }

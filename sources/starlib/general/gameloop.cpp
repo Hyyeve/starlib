@@ -42,7 +42,7 @@ namespace starlib
             const f64 time_until_anything = glm::min(update_step_time - update_accumulator, frame_step_time - frame_accumulator);
             if (time_until_anything > 0)
             {
-                sleep_micros(time_until_anything * 1000 * 1000);
+                sleep_accurate(time_until_anything);
                 continue;
             }
 

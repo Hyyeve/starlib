@@ -46,4 +46,8 @@ namespace starlib
         sleep_nanos(microseconds * 1000);
     }
 
+    void sleep_accurate(const f32 seconds)
+    {
+        return sleep_micros(seconds * 1000 * 1000);
+    }
 }
