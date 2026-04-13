@@ -35,6 +35,7 @@ target_sources(starlib PUBLIC FILE_SET HEADERS BASE_DIRS ${H_SOURCES_ROOT} FILES
         math/glm.hpp
         math/interpolatable.hpp
         math/random.hpp
+        math/noise.hpp
         utility/bitvector.hpp
         utility/block_allocator.hpp
         utility/colors.hpp
