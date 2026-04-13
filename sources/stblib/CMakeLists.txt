@@ -5,7 +5,6 @@ target_sources(stblib PRIVATE
 )
 
 target_sources(stblib PUBLIC FILE_SET HEADERS BASE_DIRS ${H_SOURCES_ROOT} FILES
-        stb_truetype.hpp
         stb_image.hpp
         stb_image_write.hpp
 )
